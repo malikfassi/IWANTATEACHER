@@ -6,7 +6,10 @@
 
 <h1>Création d'un compte</h1>
 <form action="#" method="get">
-	{{ form.as_p }}
+	{% csrf_token %}
+	{{ formUtilisateur.as_p }}
+	{% csrf_token %}
+	{{ formUser.as_p }}
 	<p>
 		<input type="submit" value="Créer un compte"/>
 	</p> 

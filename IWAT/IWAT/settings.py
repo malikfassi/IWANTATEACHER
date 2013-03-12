@@ -16,7 +16,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'c:/users/max/documents/iwat/projet-iwat/DB.db',                      # Or path to database file if using sqlite3.
+        'NAME': "/Users/qq/Desktop/IWANTATEACHER/IWAT/DB.db",                      # Or path to database file if using sqlite3.
         'USER': '',                      # Not used with sqlite3.
         'PASSWORD': '',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
@@ -32,7 +32,7 @@ TIME_ZONE = 'Europe/Brussels'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = 'fr-be'
+LANGUAGE_CODE = 'en-us'
 
 SITE_ID = 1
 
@@ -106,13 +106,15 @@ ROOT_URLCONF = 'IWAT.urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'IWAT.wsgi.application'
 
-TEMPLATE_DIRS = ("/Users/NoorJaidi/Downloads/Django-1.4.3/IWAT/login/templates",
-                "c:/users/max/documents/iwat/projet-iwat/login/templates",
-                "c:/users/max/documents/iwat/projet-iwat/annonces/templates",
+TEMPLATE_DIRS = (
+                "/Users/NoorJaidi/Desktop/IWANTATEACHER/login/templates",
+                 "/Users/NoorJaidi/Desktop/IWANTATEACHER/annonces/templates"
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
 )
+
+SESSION_EXPIRE_AT_BROWSER_CLODE = True
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -165,3 +167,6 @@ LOGGING = {
 #utilisateur="Malik"
 #if (utilisateur): 
 #    DATABASES["NAME"]= "/Users/NoorJaidi/Desktop/IWANTATEACHER/DB.db" if utilisateur=="Malik" else 'c:/users/max/documents/iwat/projet-iwat/DB.db'
+
+
+

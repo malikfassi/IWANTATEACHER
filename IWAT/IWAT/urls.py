@@ -1,5 +1,4 @@
 from django.conf.urls import *
-from login.views import *
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 admin.autodiscover()
@@ -9,5 +8,6 @@ urlpatterns = patterns('',
     (r'^admin/', include(admin.site.urls)),
     (r'^index/', 'annonces.views.getLastAnnouncement'),
     (r'^nouvelleAnnonce/', 'annonces.views.postAnnonce'),
+    (r'^signin/', "login.views.signin"),
     #ajouter page signin
 )

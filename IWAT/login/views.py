@@ -1,9 +1,9 @@
 
 from django.shortcuts import render_to_response
-from django.contrib.auth import authenticate, login
-from django.contrib.auth import logout
+from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
-from login.models import LoginForm
+from login.forms import LoginForm, SignInForm, UtilisateurForm
+from login.models import Utilisateur
 from django.template import RequestContext
 
 def login_user(request):
@@ -16,8 +16,8 @@ def login_user(request):
                 state = 'logged in'
     else:
         form = LoginForm()
-    c = RequestContext(request,{'message':state, 'form':form})
-    return render_to_response('login.html',c)
+    context = RequestContext(request,{'message':state, 'form':form})
+    return render_to_response('login.html',context)
 
 def main_page(request):
     return render_to_response('index.html')
@@ -28,3 +28,22 @@ def logout_page(request):
     """
     logout(request)
     return HttpResponseRedirect('/')
+
+def signin(request):
+    if request.GET:
+        formUser = SignInForm(request.GET)
+        formUtilisateur = UtilisateurForm(request.GET)
+        if formUser.is_valid() and formUtilisateur.is_valid():
+            user=formUser.save()
+            user.set_password(formUser.cleaned_data["password"])
+            user.save()
+            utilisateur = Utilisateur(profilBase=user, birthday=formUtilisateur.cleaned_data["birthday"])
+            utilisateur.save()
+            return(HttpResponseRedirect('/login'))
+        else:
+            return(render_to_response("signin.html",{"formUser":formUser, "formUtilisateur":formUtilisateur}))
+    else:
+        formUser = SignInForm()
+        formUtilisateur = UtilisateurForm()
+        context = RequestContext(request,{"formUser":formUser, "formUtilisateur":formUtilisateur})
+        return(render_to_response("signin.html",context))

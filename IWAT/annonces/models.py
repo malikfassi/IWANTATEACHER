@@ -1,7 +1,8 @@
 from django.db import models
 from cours.models import CourEvenement
 from cours.models import CourEvenementForm
-from login.models import Utilisateur, UtilisateurForm
+from login.models import Utilisateur
+from login.forms import UtilisateurForm
 import django.forms
 
 class Annonce(models.Model):
