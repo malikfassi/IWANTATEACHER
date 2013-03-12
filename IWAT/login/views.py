@@ -1,33 +1,54 @@
 
 from django.shortcuts import render_to_response
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from login.forms import LoginForm, SignInForm, UtilisateurForm
 from login.models import Utilisateur
 from django.template import RequestContext
 
-def login_user(request):
+def login(request):
     state = "Please log in below..."
+    if ("loggedUserId" in request.session):
+        return(HttpResponseRedirect("/home"))
     if request.POST:
         form = LoginForm(request.POST)
         if(form.is_valid()):
             user = authenticate(username = form.cleaned_data['pseudo'], password=form.cleaned_data['mdp'])
             if user is not None:
                 state = 'logged in'
+                username = form.cleaned_data["pseudo"]
+                loggedUser = User.objects.get(username=username)
+                request.session["loggedUserId"] = loggedUser.id
     else:
         form = LoginForm()
     context = RequestContext(request,{'message':state, 'form':form})
     return render_to_response('login.html',context)
 
-def main_page(request):
-    return render_to_response('index.html')
- 
-def logout_page(request):
+def logout(request):
     """
     Log users out and re-direct them to the main page.
     """
     logout(request)
-    return HttpResponseRedirect('/')
+    del request.session["loggedUserId"]
+    return (HttpResponseRedirect('/home'))
+
+def home(request):
+    loggedUser = getLoggedUserFromRequest(request)
+    if (loggedUser):
+        return(render_to_response("home.html",{"loggedUser": loggedUser}))
+    else:
+        return(HttpResponseRedirect("/login"))
+
+def getLoggedUserFromRequest(request):
+    if ("loggedUserId" in request.session):
+        loggedUserId = request.session["loggedUserId"]
+        if (len(User.objects.filter(id=loggedUserId))==1):
+            return (User.objects.get(id=loggedUserId))
+        else:
+            return(None)
+    else:
+        return(None)
 
 def signin(request):
     if request.GET:

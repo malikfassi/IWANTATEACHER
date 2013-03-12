@@ -4,10 +4,12 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    (r'^login/$', 'login.views.login_user'),
+    (r'^login/$', 'login.views.login'),
     (r'^admin/', include(admin.site.urls)),
     (r'^index/', 'annonces.views.getLastAnnouncement'),
     (r'^nouvelleAnnonce/', 'annonces.views.postAnnonce'),
     (r'^signin/', "login.views.signin"),
+    (r'^home/', "login.views.home"),
+    (r'^logout/', "login.views.logout"),
     #ajouter page signin
 )
