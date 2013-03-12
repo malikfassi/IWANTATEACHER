@@ -1,6 +1,5 @@
 # Django settings for IWAT project.
 
-utilisateur="Malik"
 
 
 DEBUG = True
@@ -162,4 +161,7 @@ LOGGING = {
 
 "____________________________________________________"
 
-DATABASES["NAME"]= "/Users/NoorJaidi/Desktop/IWANTATEACHER/DB.db" if utilisateur=="Malik" else 'c:/users/max/documents/iwat/projet-iwat/DB.db'
+
+#utilisateur="Malik"
+#if (utilisateur): 
+#    DATABASES["NAME"]= "/Users/NoorJaidi/Desktop/IWANTATEACHER/DB.db" if utilisateur=="Malik" else 'c:/users/max/documents/iwat/projet-iwat/DB.db'
