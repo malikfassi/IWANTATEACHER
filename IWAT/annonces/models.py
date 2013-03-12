@@ -6,8 +6,8 @@ import django.forms
 
 class Annonce(models.Model):
     contexte = models.OneToOneField(CourEvenement, related_name="contexteInAnnonce")
-    posterPar = models.OneToOneField(Utilisateur, related_name="posteurInAnnonce")
-    posterLe = models.DateTimeField()
+    postePar = models.OneToOneField(Utilisateur, related_name="posteurInAnnonce")
+    posteLe = models.DateTimeField()
 
     def __unicode__(self):
         return (self.posterPar.__unicode__()+ " cherche un cour de " + self.contexte.__unicode__())

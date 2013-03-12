@@ -8,7 +8,6 @@ from django.template import RequestContext
 
 def login_user(request):
     state = "Please log in below..."
-    username = password = ''
     if request.POST:
         form = LoginForm(request.POST)
         if(form.is_valid()):
