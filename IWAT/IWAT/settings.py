@@ -1,10 +1,14 @@
 # Django settings for IWAT project.
 
+utilisateur="Malik"
+
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
     ("Max", "maximilienlarue@yahoo.fr"),
+    ("Malik", "malikfassifihri@gmail.com")
 
 )
 
@@ -104,8 +108,8 @@ ROOT_URLCONF = 'IWAT.urls'
 WSGI_APPLICATION = 'IWAT.wsgi.application'
 
 TEMPLATE_DIRS = ("/Users/NoorJaidi/Downloads/Django-1.4.3/IWAT/login/templates",
-                ("c:/users/max/documents/iwat/projet-iwat/login/templates"),
-                ("c:/users/max/documents/iwat/projet-iwat/annonces/templates"),
+                "c:/users/max/documents/iwat/projet-iwat/login/templates",
+                "c:/users/max/documents/iwat/projet-iwat/annonces/templates",
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -155,3 +159,7 @@ LOGGING = {
         },
     }
 }
+
+"____________________________________________________"
+
+DATABASES["NAME"]= "/Users/NoorJaidi/Desktop/IWANTATEACHER/DB.db" if utilisateur=="Malik" else 'c:/users/max/documents/iwat/projet-iwat/DB.db'
