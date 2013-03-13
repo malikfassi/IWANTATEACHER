@@ -2,7 +2,7 @@ from django.shortcuts import render_to_response
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
-from login.forms import LoginForm, SignInForm, UtilisateurForm
+from login.forms import LoginForm, UserForm, UtilisateurForm
 from login.models import Utilisateur
 from django.template import RequestContext
 
@@ -44,7 +44,7 @@ def getLoggedUserFromRequest(request):
 
 def signin(request):
     if request.GET:
-        formUser = SignInForm(request.GET)
+        formUser = UserForm(request.GET)
         formUtilisateur = UtilisateurForm(request.GET)
         if formUser.is_valid() and formUtilisateur.is_valid():
             user=formUser.save()
@@ -56,7 +56,7 @@ def signin(request):
         else:
             return(render_to_response("signin.html",{"formUser":formUser, "formUtilisateur":formUtilisateur}))
     else:
-        formUser = SignInForm()
+        formUser = UserForm()
         formUtilisateur = UtilisateurForm()
         context = RequestContext(request,{"formUser":formUser, "formUtilisateur":formUtilisateur})
         return(render_to_response("signin.html",context))
