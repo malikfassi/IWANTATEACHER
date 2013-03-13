@@ -50,14 +50,14 @@ AnneeEtude = (
     )
 
 class CourCompetence(models.Model):
-    secteur = models.CharField(max_length=2, choices=Matieres)
-    anneeSecteur = models.CharField(max_length=2, choices=AnneeEtude)
+    secteur = models.CharField(max_length="2", choices=Matieres)
+    anneeSecteur = models.CharField(max_length="2", choices=AnneeEtude)
 
     def __unicode__(self):
-        return self.secteur+self.anneeSecteur
+        return( self.secteur+self.anneeSecteur)
 
     def __repr__(self):
-        return self.__unicode__()
+        return (self.__unicode__())
 
 
 
@@ -73,7 +73,7 @@ class CourEvenement(models.Model):
         return("Eleve : "+self.eleve.__repr__()+ " Professeur : " + self.prof.__repr__() + " à " + self.lieu)
 
     def __repr__(self):
-        return self.__unicode__()
+        return( self.__unicode__())
 
 
 

@@ -11,23 +11,35 @@ from django.shortcuts import render_to_response
 from cours.forms import ContexteForm, CourCompetenceForm
 from cours.models import CourEvenement, CourCompetence
 from django.template import RequestContext
+from login.views import getLoggedUserFromRequest
+from login.models import Utilisateur
 
 def postAnnonce(request):
-	if request.GET and 'loggedUserId' in request.session:
-		formulaireContexte = ContexteForm(request.GET)
-		formulaireMatiere = CourCompetenceForm(request.GET)
-		if(formulaireMatiere.is_valid() and formulaireContexte.is_valid()):
-			contexte = CourEvenement(sujet=getMatiere(), heure=formulaireContexte.cleared_data['heure'], lieu=formulaireContexte.cleared_data['lieu'], eleve=request.session['loggedUserId'], prof=formulaireContexte['prof'])
-			newContexte = contexte.save()
-			newAnnonce = Annonce(contexte=newContexte, posterPar=request.session['loggedUserId'], posterLe=timezone.now())
-			newAnnonce.save()
-			return render_to_response("postAnnonce.html", RequestContext(request, {'contexteForm':formulaireContexte, 'competenceForm':formulaireMatiere, 'message':"Annonce postee vaec succes!"}))
+	if "loggedUserId" in request.session:
+		if request.GET:
+			formulaireContexte = ContexteForm(request.GET)
+			formulaireMatiere = CourCompetenceForm(request.GET)
+			formulaireContexte.secteur = "FR"
+			formulaireMatiere.anneeSecteur = "S3"
+			message = 'Il y a des erreurs dans le formulaire'
+			if(formulaireMatiere.is_valid() and formulaireContexte.is_valid()):
+				message = 'Annonce postee!'
+				contexte = CourEvenement(sujet=getMatiere(), heure=formulaireContexte.cleared_data['heure'], lieu=formulaireContexte.cleared_data['lieu'], eleve=request.session['loggedUserId'], prof=formulaireContexte['prof'])
+				newContexte = contexte.save()
+				newAnnonce = Annonce(contexte=newContexte, posterPar=userId, posterLe=timezone.now())
+				newAnnonce.save()
+				return render_to_response("postAnnonce.html", RequestContext(request, {'contexteForm':'', 'competenceForm':'', 'message':message}))
+			return render_to_response("postAnnonce.html", RequestContext(request, {'contexteForm':formulaireContexte, 'competenceForm':formulaireMatiere, 'message':message}))
 		else:
-			return render_to_response("postAnnonce.html", RequestContext(request, {'contexteForm':formulaireContexte, 'competenceForm':formulaireMatiere, 'message':"Il ya des champs erones dans le formulaire"}))
+				formulaireContexte = ContexteForm()
+				formulaireMatiere = CourCompetenceForm()
+				message = ''
+				return render_to_response("postAnnonce.html", RequestContext(request, {'contexteForm':formulaireContexte, 'competenceForm':formulaireMatiere, 'message':message}))
 	else:
-		formulaireContexte = ContexteForm()
-		formulaireMatiere = CourCompetenceForm()
-	return render_to_response("postAnnonce.html", RequestContext(request, {'contexteForm':formulaireContexte, 'competenceForm':formulaireMatiere, 'message':"Il faut etre identifier pour poster"}))
+		formulaireContexte = ""
+		formulaireMatiere = ""
+		message="Connectez-vous pour acceder a cette page"
+	return render_to_response("postAnnonce.html", RequestContext(request, {'contexteForm':formulaireContexte, 'competenceForm':formulaireMatiere, 'message':message}))
 
 def getMatiere(pSecteur, pAnneeSecteur):
 	alreadyExist = CourCompetence.objects.all()

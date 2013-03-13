@@ -1,15 +1,15 @@
 from django.forms import ModelForm
+from django import forms
 
-from cours.models import CourEvenement, CourCompetence, CourCompetenceUser
-
+from cours.models import *
 class ContexteForm(ModelForm):
 	class Meta:
 		model = CourEvenement
-		exclude = ('sujet', 'eleve')
+		exclude = ('sujet', 'eleve', "prof")
 
-class CourCompetenceForm(ModelForm):
-    class Meta:
-        model = CourCompetence
+class CourCompetenceForm(forms.Form):
+	secteur =forms.CharField(max_length="2",  widget=forms.Select(choices=Matieres))
+	anneeSecteur = forms.CharField(max_length="2", widget=forms.Select(choices=AnneeEtude))
 
 class CourCompetenceUserForm(ModelForm):
     class Meta:
