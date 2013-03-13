@@ -10,6 +10,7 @@ urlpatterns = patterns('',
     (r'^nouvelleAnnonce/', 'annonces.views.postAnnonce'),
     (r'^signin/', "login.views.signin"),
     (r'^home/', "login.views.home"),
-    (r'^logout/', "login.views.logout"),
+	(r'^logout/$', 'django.contrib.auth.views.logout',
+                          {'next_page': '/home/'})
     #ajouter page signin
 )

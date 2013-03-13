@@ -14,24 +14,17 @@ def login(request):
     if request.POST:
         form = LoginForm(request.POST)
         if(form.is_valid()):
-            user = authenticate(username = form.cleaned_data['pseudo'], password=form.cleaned_data['mdp'])
+            user = authenticate(username = form.cleaned_data['username'], password=form.cleaned_data['password'])
             if user is not None:
                 state = 'logged in'
-                username = form.cleaned_data["pseudo"]
+                username = form.cleaned_data["username"]
                 loggedUser = User.objects.get(username=username)
                 request.session["loggedUserId"] = loggedUser.id
+                return(render_to_response("home.html",{"loggedUser": loggedUser}))
     else:
         form = LoginForm()
     context = RequestContext(request,{'message':state, 'form':form})
     return render_to_response('login.html',context)
-
-def logout(request):
-    """
-    Log users out and re-direct them to the main page.
-    """
-    logout(request)
-    del request.session["loggedUserId"]
-    return (HttpResponseRedirect('/home'))
 
 def home(request):
     loggedUser = getLoggedUserFromRequest(request)
