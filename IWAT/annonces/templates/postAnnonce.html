@@ -11,6 +11,12 @@ body{
 </style>
 </head>
 <body>
-	{{ form }}
+	{{ message }}
+	<form action='#' method='POST'>
+		{{ contexteForm }}
+		{{ competenceForm }}
+		<p>
+			<input action="submit" value="Poster">
+		</p>
 </body>
 </html>
