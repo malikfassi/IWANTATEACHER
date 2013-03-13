@@ -59,9 +59,6 @@ class CourCompetence(models.Model):
     def __repr__(self):
         return self.__unicode__()
 
-class CourCompetenceForm(ModelForm):
-    class Meta:
-        model = CourCompetence
 
 
 class CourEvenement(models.Model):
@@ -73,13 +70,11 @@ class CourEvenement(models.Model):
     
     def __unicode__(self):
         #return("Cours de "+ self.secteur+" "+self.anneeSecteur)
-        return("Eleve : "+self.eleve.__unicode__()+ " Professeur : " + self.prof.__unicode__() + " à " + self.lieu)
+        return("Eleve : "+self.eleve.__repr__()+ " Professeur : " + self.prof.__repr__() + " à " + self.lieu)
 
     def __repr__(self):
         return self.__unicode__()
 
-class CourEvenementForm(ModelForm):
-   sujet = CourCompetenceForm
 
 
 
@@ -89,8 +84,3 @@ class CourCompetenceUser(CourCompetence):            # |
     competence = models.OneToOneField(CourCompetence, related_name="CompetenceInCourCompetenceUser")
     def __unicode__(self):
         return self.CourCompetence.__unicode__() + " : " + self.utilisateurCompetent.__unicode__()
-
-class CourCompetenceUserForm(ModelForm):
-    class Meta:
-        model = CourCompetenceUser
-
